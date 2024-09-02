@@ -1,8 +1,9 @@
 import "mapbox-gl/dist/mapbox-gl.css";
 import mapboxgl from "mapbox-gl";
 import { useEffect, useState } from "react";
+import { Coordinates } from "@/interfaces/coordinates.interface";
 
-const useMap = (mapRef: React.RefObject<HTMLElement>) => {
+const useMap = (mapRef: React.RefObject<HTMLElement>, initialCoords: Coordinates) => {
   const [mapValue, setMapValue] = useState(Object);
 
   useEffect(() => {
@@ -10,8 +11,9 @@ const useMap = (mapRef: React.RefObject<HTMLElement>) => {
     const map = new mapboxgl.Map({
       container: mapRef.current,
       zoom: 13,
-      style: "mapbox://styles/mapbox/standard",
-      accessToken:"pk.eyJ1IjoiaHJleWVzIiwiYSI6ImNtMGk5bzc2cjA5cWUya3M4c3JvbXhiZzMifQ.IPh44mVFEwCuY2XnhFTc2w",
+      style: 'mapbox://styles/mapbox/dark-v10',
+      accessToken: import.meta.env.VITE_MAPBOX_TOKEN,
+      center: initialCoords,
     });
     setMapValue(map);
     return () => {
